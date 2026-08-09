@@ -1,0 +1,504 @@
+{
+  "source": "https://bellascejas0933.setmore.com/",
+  "scrapedAt": "2026-08-09",
+  "currency": "USD",
+  "services": [
+    {
+      "id": "sc47be984f0ec7e37080234ca4b8ffb29c9571eb2",
+      "title": "Evaluacion para Procedimiento",
+      "price": 0,
+      "durationMins": 45,
+      "description": ""
+    },
+    {
+      "id": "s92657a6c9aa9482f1e539bd8a42fb67f851343f9",
+      "title": "Mantenimiento De Microblading,Micropigmentacion (cejas , Labios U Ojos)",
+      "price": 300,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "saaf3d1002be39bcde526d6cae7e5878676e18016",
+      "title": "Microblading En Cejas Con Trabajo Anterior",
+      "price": 550,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "sa920a846f5b1768aebb82d6fc9c5bb69cc576138",
+      "title": "Microblading Pelo A Pelo En Cejas Virgenes",
+      "price": 400,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "sc939584bba0f64ef53bd52e4bb4cae467a37c505",
+      "title": "Micropigmentacion Capilar (Densidad Capilar )",
+      "price": 534,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "scfb04166cef6acc618079069baadf2c0b7cdca26",
+      "title": "Micropigmentacion De Areola",
+      "price": 450,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "s61827d750d2750acc57fe1e23dbe4a14ecb16dde",
+      "title": "Micropigmentacion de cejas Nanobrows Hairstrokes",
+      "price": 450,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "s22b31bd61384945757f87de03531b6bab9f38f88",
+      "title": "Micropigmentacion De Cejas Powder Brows",
+      "price": 300,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "sc14d07e4de253eab1cea074898fb9f125d2c1654",
+      "title": "Micropigmentacion De Delineado De Ojos",
+      "price": 450,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "s2aec93872deeade479e07011814cfdbe483c9538",
+      "title": "Micropigmentacion de Iluminacion de cejas",
+      "price": 150,
+      "durationMins": 60,
+      "description": ""
+    },
+    {
+      "id": "sf9d57cc3e2812601b7ada9ae2e4ab216a5b41768",
+      "title": "Micropigmentacion De Labios",
+      "price": 450,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "s85045288a48997762c0d9854fed05e9e3ef17956",
+      "title": "Promo Microblading + Labios",
+      "price": 900,
+      "durationMins": 300,
+      "description": "900"
+    },
+    {
+      "id": "sa47993cacc9ec94f31fbfccc2ec3f58c4c1ab521",
+      "title": "Refil De Micropigmentacion Nanobrows",
+      "price": 200,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "sa6410315f2d8bd151706b144d63fcb46e2a999be",
+      "title": "Refil De Micropigmentacion Powder Brows",
+      "price": 200,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s43dac5c64bf3f1645623b9b017a1f91185f28f33",
+      "title": "Refil Delineado De Ojos",
+      "price": 200,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s8974062dd49a4ace24d0449eb5120b35a8ed7f2c",
+      "title": "Refil Microblading",
+      "price": 200,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "sdca05b5fc243469d590a7a13a4d9ccfe4bb0bb3f",
+      "title": "Refil Micropigmentacion Capilar",
+      "price": 534,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "s17aa4c6130252d0976d61eec9c94cc6592cfb5a6",
+      "title": "Refil Micropigmentacion De Areola",
+      "price": 250,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "s97739f2a8d761596a3e2b111334c59c5ac6719d3",
+      "title": "Refil Micropigmentacion De Labios",
+      "price": 200,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s52ecb6bc0d8f43f09978ecbe48869c868c4525e9",
+      "title": "Refil Micropigmentacion En Trabajo Anterior",
+      "price": 250,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s4915e85a8d5d4b6206d557cd3bfb8bbab10a9ccd",
+      "title": "Refil Micropigmentacion Iluminacion De Cejas",
+      "price": 100,
+      "durationMins": 60,
+      "description": ""
+    },
+    {
+      "id": "2b3a2ae5-ebff-4af9-a713-604b98cd2cde",
+      "title": "Remoción",
+      "price": 150,
+      "durationMins": 45,
+      "description": ""
+    },
+    {
+      "id": "s10c31e5d2beacd46fd5e1a0c972fe0da5adb948d",
+      "title": "Gift Card $100",
+      "price": 100,
+      "durationMins": 60,
+      "description": ""
+    },
+    {
+      "id": "s763f7e2a0e21844f329df660ea3c0504286866c5",
+      "title": "Gift Card $150",
+      "price": 150,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s2c0a8132013e25ed7fe576c2f5881168e413e985",
+      "title": "Gift Card $200",
+      "price": 200,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s185afd66d1a354449c111e524ffa95cd88a862fd",
+      "title": "Gift Card $300",
+      "price": 300,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "s4bca3321348e1de528aedcd64fec676e3b735518",
+      "title": "Gift Card $35",
+      "price": 35,
+      "durationMins": 45,
+      "description": ""
+    },
+    {
+      "id": "s67d9345f5746f60ac480faf5fbae6441bb6c384d",
+      "title": "Gift Card $450",
+      "price": 450,
+      "durationMins": 180,
+      "description": ""
+    },
+    {
+      "id": "sb729f428e2fd073044d4f3360a3f69084ecb9503",
+      "title": "Gift Card $50",
+      "price": 50,
+      "durationMins": 60,
+      "description": ""
+    },
+    {
+      "id": "s5719f9f315004fac4aae76b7096948f3618061be",
+      "title": "Gift Card $85",
+      "price": 85,
+      "durationMins": 60,
+      "description": ""
+    },
+    {
+      "id": "793ab315-9692-4882-8707-6f1a07a5acad",
+      "title": "Gift card Labios",
+      "price": 450,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "359b1fa7-4d8f-4f1a-a80d-d2f63b8ae8e7",
+      "title": "Gift Card Microblading",
+      "price": 350,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s64589e2ba3436bcba36d97ffed7357e7b121714c",
+      "title": "Gift Card Navideña $17,50",
+      "price": 25,
+      "durationMins": 30,
+      "description": "Incluye diseño de cejas + henna + pestañas por racimo"
+    },
+    {
+      "id": "s4f85bf705a9b31886b24a342e4b632cdb1d6a5a7",
+      "title": "Depilacion De Axilas",
+      "price": 35,
+      "durationMins": 30,
+      "description": ""
+    },
+    {
+      "id": "s5eee21bd9b993c8724584588f4b4ad0a4944cbbe",
+      "title": "Depilacion De Bozo Con Cera",
+      "price": 15,
+      "durationMins": 10,
+      "description": ""
+    },
+    {
+      "id": "s56e9936c05447e340f064ae2221b7efad8c86528",
+      "title": "Depilacion De Bozo Con Hilo",
+      "price": 15,
+      "durationMins": 10,
+      "description": ""
+    },
+    {
+      "id": "s9bf2fbee7b213c05637f036505ae9fc7af51af54",
+      "title": "Depilacion De Nariz",
+      "price": 20,
+      "durationMins": 30,
+      "description": ""
+    },
+    {
+      "id": "scb3347cfb6cbf4723f10e813435b2425d088ff73",
+      "title": "Depilacion De Rostro Hilo O Cera",
+      "price": 40,
+      "durationMins": 45,
+      "description": ""
+    },
+    {
+      "id": "s1e881fb505456145710747ecf57b398f0d27e262",
+      "title": "Depilacion Full Bikini",
+      "price": 70,
+      "durationMins": 90,
+      "description": ""
+    },
+    {
+      "id": "s07db2006c525b1633769e588ef21afdbc3d2e1d6",
+      "title": "Depilacion Media Piernas",
+      "price": 40,
+      "durationMins": 40,
+      "description": ""
+    },
+    {
+      "id": "s0cf1ce0e9ef048ff6b2a154dbdc730e1a4ca33f5",
+      "title": "Depilacion Medio Bikini",
+      "price": 50,
+      "durationMins": 60,
+      "description": ""
+    },
+    {
+      "id": "seb7005beaa45a3b735e2612d1ad51708cc5f2be0",
+      "title": "Depilacion Piernas Completas",
+      "price": 50,
+      "durationMins": 60,
+      "description": ""
+    },
+    {
+      "id": "3887a046-85b0-43ce-a149-a6f19e3ffda2",
+      "title": "Diseño de cejas VIP + Depilacion de bozo",
+      "price": 50,
+      "durationMins": 45,
+      "description": "Las cejas pueden ser con cera o con Hilo y pueden incluir o no la henna, no es adicional."
+    },
+    {
+      "id": "s3306dd3741c07d783268c93905cca4d176f3d67a",
+      "title": "Limpieza Facial + Dermapen",
+      "price": 85,
+      "durationMins": 90,
+      "description": ""
+    },
+    {
+      "id": "s057009ccce539ee777dc95c320c4636aac2bd9dc",
+      "title": "Limpieza Facial + Dermaplaning",
+      "price": 100,
+      "durationMins": 90,
+      "description": ""
+    },
+    {
+      "id": "scdfcaf2ae5941e35f222179b61ce6e62ddf1a762",
+      "title": "Limpieza Facial Express",
+      "price": 70,
+      "durationMins": 60,
+      "description": ""
+    },
+    {
+      "id": "s05bbf3cf643097298703f1b307bbb226c1371ac8",
+      "title": "Aplicacion De Henna",
+      "price": 18,
+      "durationMins": 30,
+      "description": ""
+    },
+    {
+      "id": "s178e7eba1b5595a053068b68251505891527cd40",
+      "title": "Diseño de cejas HILO VIP (Incluye medidas + hilo + henna)",
+      "price": 35,
+      "durationMins": 30,
+      "description": ""
+    },
+    {
+      "id": "s2aebc641b47be3fc979776b571ebd84e95a19788",
+      "title": "Diseño de cejas WAX VIP (incluye Medidas, Wax y Henna)",
+      "price": 35,
+      "durationMins": 30,
+      "description": ""
+    },
+    {
+      "id": "s2c49b34d97265b29fa58b4bde4d462cf0570eefc",
+      "title": "Laminado De Cejas",
+      "price": 100,
+      "durationMins": 60,
+      "description": "Incluye 1 kit de Cuidados para las cejas"
+    },
+    {
+      "id": "s42b40c46f409d005c5cf0333165d31a94ca759f6",
+      "title": "Promo Cejas + Cabello",
+      "price": 100,
+      "durationMins": 30,
+      "description": ""
+    },
+    {
+      "id": "sc4eda35c6268763211b48972f9804a3cf91d3225",
+      "title": "Curso De Eyelash Extensions",
+      "price": 250,
+      "durationMins": 480,
+      "description": "El valor reflejado corresponde al 50% , el valor completo es $500"
+    },
+    {
+      "id": "s6f5bd765274d98226b3fbb6aa17063784b29f8d4",
+      "title": "Curso De Microblading",
+      "price": 450,
+      "durationMins": 480,
+      "description": "El valor reflejado corresponde al 50% , el precio total es de $900"
+    },
+    {
+      "id": "s93ba50b82c5cb16378228e5b56afab6f8ac9a473",
+      "title": "Master Class De Diseño De Cejas + Brown Lamination + Pestañas Por Racimo",
+      "price": 175,
+      "durationMins": 480,
+      "description": "El precio reflejado corresponde al 50% del valor, el precio total es $350"
+    },
+    {
+      "id": "sceb3f5d78ab5299695fa814b2e9eddb43d4fade0",
+      "title": "Master Class Diseno De Cejas",
+      "price": 385,
+      "durationMins": 480,
+      "description": "El costo total $385"
+    },
+    {
+      "id": "s0f64ae542ff3449705cdf9557fa6d1dac1e32fe7",
+      "title": "Pago De Suite Y Curso English",
+      "price": 0,
+      "durationMins": 30,
+      "description": ""
+    },
+    {
+      "id": "s3aff0bcfa872e7915bf4f8760b5cc3b5cf8ab81e",
+      "title": "Extensiones De Pestañas Hibridas",
+      "price": 140,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "se2e696f678352c74000e9fa9df991f238d392d0c",
+      "title": "Extensiones De Pestañas Pelo A Pelo",
+      "price": 120,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s58b53b3f4865ea25620217853584c4209023017d",
+      "title": "Extensiones De Pestañas Por Racimo",
+      "price": 70,
+      "durationMins": 30,
+      "description": ""
+    },
+    {
+      "id": "sec430967e00fadaa8c383cea1056c57a580a1a5b",
+      "title": "Extensiones De Pestañas Volumen Russo",
+      "price": 160,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "sdf8734f571e802db195160ab9e051cf5806c3ffa",
+      "title": "Lifting De Pestañas",
+      "price": 100,
+      "durationMins": 60,
+      "description": ""
+    },
+    {
+      "id": "s39a73bb803228654c59f4f6bd17f195b65ffc1c2",
+      "title": "Promo 2 Personas Diseño De Cejas VIP + Pestañas Por Racimo",
+      "price": 150,
+      "durationMins": 90,
+      "description": ""
+    },
+    {
+      "id": "sfc16fc229df58be127a244e03c19b281b5595845",
+      "title": "Promo Diseño De Cejas + Pestañas Por Racimo",
+      "price": 85,
+      "durationMins": 45,
+      "description": ""
+    },
+    {
+      "id": "sbb1e0a865008e7e3d74dfc8c9505ff3ac64dc780",
+      "title": "Promo Laminado De Cejas + Lifting De Pestañas",
+      "price": 160,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "scb8762936f1395eff2872be47ab7f3c7bfc31580",
+      "title": "Refil Pestañas Hibridas",
+      "price": 85,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s33fd37b77d1b1b2fd6184988a81b53cb8b522182",
+      "title": "Refil Pestañas Pelo A Pelo",
+      "price": 75,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "saf76740b041adc1bec97c48e1300456d30990d3a",
+      "title": "Refil Pestañas Volumen Russo",
+      "price": 110,
+      "durationMins": 120,
+      "description": ""
+    },
+    {
+      "id": "s5b050b801b2c5b45e287181b1b579b4a28385712",
+      "title": "Retiro de Pestañas Pelo A Pelo / Hibridas O Volumen",
+      "price": 35,
+      "durationMins": 45,
+      "description": ""
+    },
+    {
+      "id": "s85d463f3acb0e966f7dc448ab163a0d429599e05",
+      "title": "Retiro De Pestañas Por Racimo Con Otro Glue",
+      "price": 25,
+      "durationMins": 30,
+      "description": ""
+    },
+    {
+      "id": "s3ed2a7e857e7fab7b03d4a294fe60240ffed06c0",
+      "title": "Maquillaje",
+      "price": 62.5,
+      "durationMins": 60,
+      "description": "El precio reflejado es el 50% del servicio, el precio total es $125"
+    },
+    {
+      "id": "s471287aa2e11428ce2a624f6456baec058edbe55",
+      "title": "Retiro De Acrocordones",
+      "price": 170,
+      "durationMins": 150,
+      "description": ""
+    }
+  ]
+}
