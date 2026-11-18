@@ -1,4 +1,4 @@
-import { sql } from "@/lib/db";
+import { sql, hasDatabase } from "@/lib/db";
 import type {
   AppointmentStatus,
   AppointmentWithJoins,
@@ -6,8 +6,136 @@ import type {
   Service,
   Staff,
 } from "./types";
+import pricesData from "@/data/setmore-prices.json";
+
+const fallbackStaff: Staff[] = [
+  { id: "staff-1", name: "Yulexi Marquez", email: "Andreapalenciam@icloud.com", active: true, sort_order: 1 },
+  { id: "staff-2", name: "Andrea Palencia", email: "Andreapalenciam@icloud.com", active: true, sort_order: 2 },
+  { id: "staff-3", name: "Ingrid", email: null, active: true, sort_order: 3 },
+];
+
+const fallbackHours: BusinessHour[] = [
+  { weekday: 0, open_time: "10:00", close_time: "18:00", is_closed: true },
+  { weekday: 1, open_time: "10:00", close_time: "18:00", is_closed: true },
+  { weekday: 2, open_time: "10:00", close_time: "18:00", is_closed: false },
+  { weekday: 3, open_time: "10:00", close_time: "18:00", is_closed: false },
+  { weekday: 4, open_time: "10:00", close_time: "18:00", is_closed: false },
+  { weekday: 5, open_time: "10:00", close_time: "18:00", is_closed: false },
+  { weekday: 6, open_time: "10:00", close_time: "18:00", is_closed: false },
+];
+
+function getFallbackServices(): Service[] {
+  return (pricesData?.services || []).map((s, idx) => ({
+    id: s.id,
+    slug: s.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
+    title: s.title,
+    description: s.description || "",
+    duration_mins: Math.max(15, Number(s.durationMins) || 30),
+    price_cents: Math.round(Number(s.price) * 100),
+    category: s.title.toLowerCase().includes("micro") ? "Micropigmentacion" : "Cejas",
+    active: !s.title.toLowerCase().includes("gift"),
+    sort_order: idx + 1,
+  }));
+}
+
+// Fallback in-memory appointments around 2026-11-18 for demonstration & UI testing
+const fallbackAppointments: AppointmentWithJoins[] = [
+  {
+    id: "appt-demo-1",
+    service_id: "sa920a846f5b1768aebb82d6fc9c5bb69cc576138",
+    staff_id: "staff-1",
+    starts_at: "2026-11-18T14:30:00.000Z",
+    ends_at: "2026-11-18T16:30:00.000Z",
+    client_name: "Camila Rodríguez",
+    client_email: "camila.rodriguez@gmail.com",
+    client_phone: "+1 786-452-9912",
+    status: "confirmed",
+    notes: "Primera vez en microblading pelo a pelo.",
+    created_at: "2026-11-14T10:00:00.000Z",
+    updated_at: "2026-11-14T10:00:00.000Z",
+    service_title: "Microblading Pelo A Pelo En Cejas Virgenes",
+    service_duration_mins: 120,
+    service_price_cents: 40000,
+    staff_name: "Yulexi Marquez",
+  },
+  {
+    id: "appt-demo-2",
+    service_id: "sc47be984f0ec7e37080234ca4b8ffb29c9571eb2",
+    staff_id: "staff-2",
+    starts_at: "2026-11-18T18:00:00.000Z",
+    ends_at: "2026-11-18T18:45:00.000Z",
+    client_name: "Sofía Fernández",
+    client_email: "sofia.f@yahoo.com",
+    client_phone: "+1 786-339-1209",
+    status: "confirmed",
+    notes: "Evaluación previa.",
+    created_at: "2026-11-15T12:00:00.000Z",
+    updated_at: "2026-11-15T12:00:00.000Z",
+    service_title: "Evaluacion para Procedimiento",
+    service_duration_mins: 45,
+    service_price_cents: 0,
+    staff_name: "Andrea Palencia",
+  },
+  {
+    id: "appt-demo-3",
+    service_id: "s92657a6c9aa9482f1e539bd8a42fb67f851343f9",
+    staff_id: "staff-1",
+    starts_at: "2026-11-19T15:00:00.000Z",
+    ends_at: "2026-11-19T18:00:00.000Z",
+    client_name: "Mariana Silva",
+    client_email: "mariana.silva@outlook.com",
+    client_phone: "+1 786-882-7711",
+    status: "confirmed",
+    notes: "Mantenimiento anual de cejas.",
+    created_at: "2026-11-16T11:00:00.000Z",
+    updated_at: "2026-11-16T11:00:00.000Z",
+    service_title: "Mantenimiento De Microblading",
+    service_duration_mins: 180,
+    service_price_cents: 30000,
+    staff_name: "Yulexi Marquez",
+  },
+  {
+    id: "appt-demo-4",
+    service_id: "sc47be984f0ec7e37080234ca4b8ffb29c9571eb2",
+    staff_id: "staff-3",
+    starts_at: "2026-11-20T16:00:00.000Z",
+    ends_at: "2026-11-20T17:00:00.000Z",
+    client_name: "Valentina Morales",
+    client_email: "valentina.morales@hotmail.com",
+    client_phone: "+1 305-671-8843",
+    status: "pending",
+    notes: "Solicitó confirmación por WhatsApp.",
+    created_at: "2026-11-17T09:00:00.000Z",
+    updated_at: "2026-11-17T09:00:00.000Z",
+    service_title: "Diseño y Perfilado de Cejas",
+    service_duration_mins: 60,
+    service_price_cents: 6500,
+    staff_name: "Ingrid",
+  },
+  {
+    id: "appt-demo-5",
+    service_id: "saaf3d1002be39bcde526d6cae7e5878676e18016",
+    staff_id: "staff-1",
+    starts_at: "2026-11-21T14:00:00.000Z",
+    ends_at: "2026-11-21T17:00:00.000Z",
+    client_name: "Daniela Castillo",
+    client_email: "daniela.castillo@gmail.com",
+    client_phone: "+1 305-992-4410",
+    status: "confirmed",
+    notes: "Corrección de trabajo previo.",
+    created_at: "2026-11-17T15:00:00.000Z",
+    updated_at: "2026-11-17T15:00:00.000Z",
+    service_title: "Microblading En Cejas Con Trabajo Anterior",
+    service_duration_mins: 180,
+    service_price_cents: 55000,
+    staff_name: "Yulexi Marquez",
+  },
+];
 
 export async function listActiveServices(): Promise<Service[]> {
+  if (!hasDatabase()) {
+    return getFallbackServices().filter((s) => s.active);
+  }
   return (await sql`
     SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
     FROM services
@@ -17,6 +145,9 @@ export async function listActiveServices(): Promise<Service[]> {
 }
 
 export async function listAllServices(): Promise<Service[]> {
+  if (!hasDatabase()) {
+    return getFallbackServices();
+  }
   return (await sql`
     SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
     FROM services
@@ -25,6 +156,9 @@ export async function listAllServices(): Promise<Service[]> {
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | null> {
+  if (!hasDatabase()) {
+    return getFallbackServices().find((s) => s.slug === slug) ?? null;
+  }
   const rows = (await sql`
     SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
     FROM services
@@ -35,6 +169,9 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
 }
 
 export async function getServiceById(id: string): Promise<Service | null> {
+  if (!hasDatabase()) {
+    return getFallbackServices().find((s) => s.id === id) ?? null;
+  }
   const rows = (await sql`
     SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
     FROM services
@@ -45,6 +182,9 @@ export async function getServiceById(id: string): Promise<Service | null> {
 }
 
 export async function listActiveStaff(): Promise<Staff[]> {
+  if (!hasDatabase()) {
+    return fallbackStaff.filter((s) => s.active);
+  }
   return (await sql`
     SELECT id, name, email, active, sort_order
     FROM staff
@@ -54,6 +194,9 @@ export async function listActiveStaff(): Promise<Staff[]> {
 }
 
 export async function listAllStaff(): Promise<Staff[]> {
+  if (!hasDatabase()) {
+    return fallbackStaff;
+  }
   return (await sql`
     SELECT id, name, email, active, sort_order
     FROM staff
@@ -62,6 +205,9 @@ export async function listAllStaff(): Promise<Staff[]> {
 }
 
 export async function getStaffById(id: string): Promise<Staff | null> {
+  if (!hasDatabase()) {
+    return fallbackStaff.find((s) => s.id === id) ?? null;
+  }
   const rows = (await sql`
     SELECT id, name, email, active, sort_order
     FROM staff
@@ -72,6 +218,9 @@ export async function getStaffById(id: string): Promise<Staff | null> {
 }
 
 export async function listBusinessHours(): Promise<BusinessHour[]> {
+  if (!hasDatabase()) {
+    return fallbackHours;
+  }
   return (await sql`
     SELECT weekday, open_time::text, close_time::text, is_closed
     FROM business_hours
@@ -84,6 +233,22 @@ export async function listAppointmentsInRange(
   toIso: string,
   opts?: { staffId?: string; status?: AppointmentStatus | "all" }
 ): Promise<AppointmentWithJoins[]> {
+  if (!hasDatabase()) {
+    const fromTime = new Date(fromIso).getTime();
+    const toTime = new Date(toIso).getTime();
+    let res = fallbackAppointments.filter((a) => {
+      const t = new Date(a.starts_at).getTime();
+      return t >= fromTime && t < toTime;
+    });
+    if (opts?.staffId) {
+      res = res.filter((a) => a.staff_id === opts.staffId);
+    }
+    if (opts?.status && opts.status !== "all") {
+      res = res.filter((a) => a.status === opts.status);
+    }
+    return res.sort((a, b) => new Date(a.starts_at).getTime() - new Date(b.starts_at).getTime());
+  }
+
   const staffId = opts?.staffId;
   const status = opts?.status ?? "all";
 
@@ -157,6 +322,9 @@ export async function listAppointmentsInRange(
 export async function getAppointmentById(
   id: string
 ): Promise<AppointmentWithJoins | null> {
+  if (!hasDatabase()) {
+    return fallbackAppointments.find((a) => a.id === id) ?? null;
+  }
   const rows = (await sql`
     SELECT a.*,
       s.title AS service_title,
@@ -177,6 +345,19 @@ export async function listBusyForStaff(
   fromIso: string,
   toIso: string
 ) {
+  if (!hasDatabase()) {
+    const fromTime = new Date(fromIso).getTime();
+    const toTime = new Date(toIso).getTime();
+    return fallbackAppointments
+      .filter((a) => a.staff_id === staffId && a.status !== "cancelled")
+      .filter((a) => {
+        const s = new Date(a.starts_at).getTime();
+        const e = new Date(a.ends_at).getTime();
+        return s < toTime && e > fromTime;
+      })
+      .map((a) => ({ starts_at: a.starts_at, ends_at: a.ends_at }));
+  }
+
   return (await sql`
     SELECT starts_at, ends_at
     FROM appointments
@@ -199,6 +380,32 @@ export async function createAppointment(input: {
   notes?: string;
   status?: AppointmentStatus;
 }) {
+  if (!hasDatabase()) {
+    const service = getFallbackServices().find((s) => s.id === input.serviceId);
+    const staff = fallbackStaff.find((s) => s.id === input.staffId);
+    const id = `appt-${Date.now()}`;
+    const newAppt: AppointmentWithJoins = {
+      id,
+      service_id: input.serviceId,
+      staff_id: input.staffId,
+      starts_at: input.startsAt,
+      ends_at: input.endsAt,
+      client_name: input.clientName,
+      client_email: input.clientEmail,
+      client_phone: input.clientPhone,
+      notes: input.notes ?? "",
+      status: input.status ?? "confirmed",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      service_title: service?.title || "Servicio",
+      service_duration_mins: service?.duration_mins || 60,
+      service_price_cents: service?.price_cents || 0,
+      staff_name: staff?.name || "Staff",
+    };
+    fallbackAppointments.unshift(newAppt);
+    return { id };
+  }
+
   const rows = (await sql`
     INSERT INTO appointments (
       service_id, staff_id, starts_at, ends_at,
@@ -223,6 +430,15 @@ export async function updateAppointmentStatus(
   id: string,
   status: AppointmentStatus
 ) {
+  if (!hasDatabase()) {
+    const appt = fallbackAppointments.find((a) => a.id === id);
+    if (appt) {
+      appt.status = status;
+      appt.updated_at = new Date().toISOString();
+    }
+    return;
+  }
+
   await sql`
     UPDATE appointments
     SET status = ${status}, updated_at = now()
@@ -239,6 +455,7 @@ export async function updateService(input: {
   active: boolean;
   description: string;
 }) {
+  if (!hasDatabase()) return;
   await sql`
     UPDATE services
     SET title = ${input.title},
@@ -259,6 +476,26 @@ export async function upsertStaff(input: {
   active: boolean;
   sortOrder: number;
 }) {
+  if (!hasDatabase()) {
+    const existing = fallbackStaff.find((s) => s.id === input.id);
+    if (existing) {
+      existing.name = input.name;
+      existing.email = input.email || null;
+      existing.active = input.active;
+      existing.sort_order = input.sortOrder;
+      return existing.id;
+    }
+    const newId = `staff-${Date.now()}`;
+    fallbackStaff.push({
+      id: newId,
+      name: input.name,
+      email: input.email || null,
+      active: input.active,
+      sort_order: input.sortOrder,
+    });
+    return newId;
+  }
+
   if (input.id) {
     await sql`
       UPDATE staff
@@ -277,3 +514,4 @@ export async function upsertStaff(input: {
   `) as { id: string }[];
   return rows[0].id;
 }
+

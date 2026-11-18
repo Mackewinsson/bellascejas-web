@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/site/PageHero";
 import { CtaButton } from "@/components/site/CtaButton";
 import { MarkdownBody } from "@/components/site/MarkdownBody";
+import { ContactForm } from "@/components/site/ContactForm";
 import { readContent } from "@/lib/content";
 import { SITE } from "@/lib/site";
 
@@ -26,6 +27,9 @@ export default function ContactoPage() {
             </CtaButton>
           </div>
           <MarkdownBody markdown={doc.body} />
+          
+          <ContactForm />
+
           <div className="contact-block" style={{ marginTop: "2.5rem" }}>
             <h2>Santiago, Chile</h2>
             <p>{SITE.santiago.address}</p>

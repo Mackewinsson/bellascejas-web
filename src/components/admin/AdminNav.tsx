@@ -14,9 +14,11 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { href: "/admin", icon: "📊", label: "Inicio", short: "Inicio", exact: true },
-  { href: "/admin/citas", icon: "📅", label: "Citas", short: "Citas" },
+  { href: "/admin/citas", icon: "📅", label: "Citas & Agenda", short: "Citas" },
+  { href: "/admin/leads", icon: "👥", label: "Leads & Contactos", short: "Leads" },
+  { href: "/admin/promociones", icon: "💌", label: "Promociones & Email", short: "Promos" },
   { href: "/admin/servicios", icon: "💅", label: "Servicios", short: "Serv." },
-  { href: "/admin/equipo", icon: "👥", label: "Equipo", short: "Equipo" },
+  { href: "/admin/equipo", icon: "💆", label: "Equipo", short: "Equipo" },
 ];
 
 /** Vertical sidebar — shown md+ */
@@ -56,7 +58,7 @@ export function AdminBottomNav() {
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border safe-area-bottom">
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-6">
         {NAV.map((item) => {
           const isActive = item.exact
             ? pathname === item.href
