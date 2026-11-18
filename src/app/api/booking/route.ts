@@ -8,19 +8,12 @@ import {
 } from "@/lib/booking/queries";
 import { getAvailableSlots } from "@/lib/booking/slots";
 import { sendBookingEmails } from "@/lib/email/booking";
-import { hasDatabase } from "@/lib/db";
+import { createLead } from "@/lib/leads/queries";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
-    if (!hasDatabase()) {
-      return NextResponse.json(
-        { error: "Base de datos no configurada" },
-        { status: 503 }
-      );
-    }
-
     const body = await req.json();
     const serviceId = String(body.serviceId || "");
     let staffId = String(body.staffId || "");
@@ -128,6 +121,19 @@ export async function POST(req: Request) {
       notes,
       status: "confirmed",
     });
+
+    try {
+      await createLead({
+        name: clientName,
+        email: clientEmail,
+        phone: clientPhone,
+        source: "reserva",
+        status: "cliente",
+        notes: `Cita reservada: ${service.title}`,
+      });
+    } catch (e) {
+      console.warn("Lead auto-sync notice:", e);
+    }
 
     try {
       await sendBookingEmails({

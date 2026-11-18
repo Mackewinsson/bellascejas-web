@@ -38,8 +38,13 @@ function getFallbackServices(): Service[] {
   }));
 }
 
-// Fallback in-memory appointments around 2026-11-18 for demonstration & UI testing
-const fallbackAppointments: AppointmentWithJoins[] = [
+import fs from "fs";
+import path from "path";
+
+const LOCAL_STORE_PATH = path.join(process.cwd(), "src/data/.local-appointments.json");
+
+// Fallback initial appointments around 2026-11-18 for demonstration & UI testing
+const initialDemoAppointments: AppointmentWithJoins[] = [
   {
     id: "appt-demo-1",
     service_id: "sa920a846f5b1768aebb82d6fc9c5bb69cc576138",
@@ -131,6 +136,27 @@ const fallbackAppointments: AppointmentWithJoins[] = [
     staff_name: "Yulexi Marquez",
   },
 ];
+
+function getFallbackAppointments(): AppointmentWithJoins[] {
+  try {
+    if (fs.existsSync(LOCAL_STORE_PATH)) {
+      const raw = fs.readFileSync(LOCAL_STORE_PATH, "utf8");
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch {
+    /* fallback to initial */
+  }
+  return [...initialDemoAppointments];
+}
+
+function saveFallbackAppointments(list: AppointmentWithJoins[]) {
+  try {
+    fs.writeFileSync(LOCAL_STORE_PATH, JSON.stringify(list, null, 2), "utf8");
+  } catch (err) {
+    console.warn("Could not write local appointments store:", err);
+  }
+}
 
 export async function listActiveServices(): Promise<Service[]> {
   if (!hasDatabase()) {
@@ -236,7 +262,7 @@ export async function listAppointmentsInRange(
   if (!hasDatabase()) {
     const fromTime = new Date(fromIso).getTime();
     const toTime = new Date(toIso).getTime();
-    let res = fallbackAppointments.filter((a) => {
+    let res = getFallbackAppointments().filter((a) => {
       const t = new Date(a.starts_at).getTime();
       return t >= fromTime && t < toTime;
     });
@@ -323,7 +349,7 @@ export async function getAppointmentById(
   id: string
 ): Promise<AppointmentWithJoins | null> {
   if (!hasDatabase()) {
-    return fallbackAppointments.find((a) => a.id === id) ?? null;
+    return getFallbackAppointments().find((a) => a.id === id) ?? null;
   }
   const rows = (await sql`
     SELECT a.*,
@@ -348,7 +374,7 @@ export async function listBusyForStaff(
   if (!hasDatabase()) {
     const fromTime = new Date(fromIso).getTime();
     const toTime = new Date(toIso).getTime();
-    return fallbackAppointments
+    return getFallbackAppointments()
       .filter((a) => a.staff_id === staffId && a.status !== "cancelled")
       .filter((a) => {
         const s = new Date(a.starts_at).getTime();
@@ -381,6 +407,7 @@ export async function createAppointment(input: {
   status?: AppointmentStatus;
 }) {
   if (!hasDatabase()) {
+    const list = getFallbackAppointments();
     const service = getFallbackServices().find((s) => s.id === input.serviceId);
     const staff = fallbackStaff.find((s) => s.id === input.staffId);
     const id = `appt-${Date.now()}`;
@@ -402,7 +429,8 @@ export async function createAppointment(input: {
       service_price_cents: service?.price_cents || 0,
       staff_name: staff?.name || "Staff",
     };
-    fallbackAppointments.unshift(newAppt);
+    list.unshift(newAppt);
+    saveFallbackAppointments(list);
     return { id };
   }
 
@@ -431,10 +459,12 @@ export async function updateAppointmentStatus(
   status: AppointmentStatus
 ) {
   if (!hasDatabase()) {
-    const appt = fallbackAppointments.find((a) => a.id === id);
+    const list = getFallbackAppointments();
+    const appt = list.find((a) => a.id === id);
     if (appt) {
       appt.status = status;
       appt.updated_at = new Date().toISOString();
+      saveFallbackAppointments(list);
     }
     return;
   }
@@ -444,6 +474,82 @@ export async function updateAppointmentStatus(
     SET status = ${status}, updated_at = now()
     WHERE id = ${id}
   `;
+}
+
+export async function updateAppointment(input: {
+  id: string;
+  serviceId?: string;
+  staffId?: string;
+  startsAt?: string;
+  endsAt?: string;
+  clientName?: string;
+  clientEmail?: string;
+  clientPhone?: string;
+  notes?: string;
+  status?: AppointmentStatus;
+}): Promise<AppointmentWithJoins | null> {
+  if (!hasDatabase()) {
+    const list = getFallbackAppointments();
+    const appt = list.find((a) => a.id === input.id);
+    if (appt) {
+      if (input.serviceId) {
+        appt.service_id = input.serviceId;
+        const s = getFallbackServices().find((x) => x.id === input.serviceId);
+        if (s) {
+          appt.service_title = s.title;
+          appt.service_duration_mins = s.duration_mins;
+          appt.service_price_cents = s.price_cents;
+        }
+      }
+      if (input.staffId) {
+        appt.staff_id = input.staffId;
+        const st = fallbackStaff.find((x) => x.id === input.staffId);
+        if (st) appt.staff_name = st.name;
+      }
+      if (input.startsAt) appt.starts_at = input.startsAt;
+      if (input.endsAt) appt.ends_at = input.endsAt;
+      if (input.clientName) appt.client_name = input.clientName;
+      if (input.clientEmail) appt.client_email = input.clientEmail;
+      if (input.clientPhone !== undefined) appt.client_phone = input.clientPhone;
+      if (input.notes !== undefined) appt.notes = input.notes;
+      if (input.status) appt.status = input.status;
+      appt.updated_at = new Date().toISOString();
+      saveFallbackAppointments(list);
+      return appt;
+    }
+    return null;
+  }
+
+  await sql`
+    UPDATE appointments
+    SET 
+      service_id = COALESCE(${input.serviceId}, service_id),
+      staff_id = COALESCE(${input.staffId}, staff_id),
+      starts_at = COALESCE(${input.startsAt}::timestamptz, starts_at),
+      ends_at = COALESCE(${input.endsAt}::timestamptz, ends_at),
+      client_name = COALESCE(${input.clientName}, client_name),
+      client_email = COALESCE(${input.clientEmail}, client_email),
+      client_phone = COALESCE(${input.clientPhone}, client_phone),
+      notes = COALESCE(${input.notes}, notes),
+      status = COALESCE(${input.status}, status),
+      updated_at = now()
+    WHERE id = ${input.id}
+  `;
+  return getAppointmentById(input.id);
+}
+
+export async function deleteAppointment(id: string): Promise<boolean> {
+  if (!hasDatabase()) {
+    const list = getFallbackAppointments();
+    const idx = list.findIndex((a) => a.id === id);
+    if (idx >= 0) {
+      list.splice(idx, 1);
+      saveFallbackAppointments(list);
+    }
+    return true;
+  }
+  await sql`DELETE FROM appointments WHERE id = ${id}`;
+  return true;
 }
 
 export async function updateService(input: {

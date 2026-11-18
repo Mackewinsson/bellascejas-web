@@ -18,25 +18,6 @@ export default async function ReservarPage({
 }) {
   const sp = await searchParams;
 
-  if (!hasDatabase()) {
-    return (
-      <>
-        <PageHero
-          title="Reservar"
-          lead="El sistema de citas aún no está configurado."
-        />
-        <section className="section">
-          <div className="container stub">
-            <p>Configura NEON_DATABASE_URL y ejecuta el seed.</p>
-            <a className="btn btn--primary" href={SITE.whatsappUrl}>
-              WhatsApp
-            </a>
-          </div>
-        </section>
-      </>
-    );
-  }
-
   const [services, staff] = await Promise.all([
     listActiveServices(),
     listActiveStaff(),

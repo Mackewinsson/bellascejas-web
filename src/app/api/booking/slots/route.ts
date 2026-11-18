@@ -7,9 +7,6 @@ export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
   try {
-    if (!hasDatabase()) {
-      return NextResponse.json({ slots: [] });
-    }
     const { searchParams } = new URL(req.url);
     const serviceId = searchParams.get("serviceId") || "";
     const dateYmd = searchParams.get("date") || "";
