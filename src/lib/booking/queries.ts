@@ -24,24 +24,99 @@ const fallbackHours: BusinessHour[] = [
   { weekday: 6, open_time: "10:00", close_time: "18:00", is_closed: false },
 ];
 
-function getFallbackServices(): Service[] {
-  return (pricesData?.services || []).map((s, idx) => ({
-    id: s.id,
-    slug: s.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
-    title: s.title,
-    description: s.description || "",
-    duration_mins: Math.max(15, Number(s.durationMins) || 30),
-    price_cents: Math.round(Number(s.price) * 100),
-    category: s.title.toLowerCase().includes("micro") ? "Micropigmentacion" : "Cejas",
-    active: !s.title.toLowerCase().includes("gift"),
-    sort_order: idx + 1,
-  }));
+function categorizeService(title: string): string {
+  const t = title.toLowerCase();
+  if (/gift\s*card|tarjeta/.test(t)) return "Gift Cards";
+  if (/curso|master class|clase/.test(t)) return "Cursos";
+  if (
+    /microblad|micropigment|powder|nanobrow|labios|areola|capilar|delineado|refil micro|mantenimiento de micro|evaluacion|remoci/.test(
+      t
+    )
+  )
+    return "Micropigmentación";
+  if (/pesta|lifting|racimo|volumen|hibrid|refil pest|retiro de pest/.test(t))
+    return "Pestañas";
+  if (/depil/.test(t)) return "Depilación";
+  if (/facial|dermapen|dermaplan|limpieza/.test(t)) return "Faciales";
+  if (/electro|acrocord/.test(t)) return "Electrocauterización";
+  if (/ceja|henna|laminado|wax|hilo/.test(t)) return "Cejas";
+  return "Otros";
 }
 
 import fs from "fs";
 import path from "path";
 
 const LOCAL_STORE_PATH = path.join(process.cwd(), "src/data/.local-appointments.json");
+const LOCAL_SERVICES_STORE_PATH = path.join(process.cwd(), "src/data/.local-services.json");
+
+function readLocalServices(): Record<string, Partial<Service>> {
+  try {
+    if (fs.existsSync(LOCAL_SERVICES_STORE_PATH)) {
+      const raw = fs.readFileSync(LOCAL_SERVICES_STORE_PATH, "utf8");
+      return JSON.parse(raw);
+    }
+  } catch {}
+  return {};
+}
+
+function writeLocalServices(data: Record<string, Partial<Service>>) {
+  try {
+    fs.writeFileSync(LOCAL_SERVICES_STORE_PATH, JSON.stringify(data, null, 2), "utf8");
+  } catch (err) {
+    console.warn("Could not write local services store:", err);
+  }
+}
+
+export function getPublicImages(): string[] {
+  const imagesDir = path.join(process.cwd(), "public/images");
+  if (!fs.existsSync(imagesDir)) return [];
+  try {
+    const files = fs.readdirSync(imagesDir);
+    return files
+      .filter((f) => /\.(webp|jpg|jpeg|png)$/i.test(f))
+      .map((f) => `/images/${f}`);
+  } catch {
+    return [];
+  }
+}
+
+function getDefaultServiceImage(title: string, category: string): string {
+  const t = (title + " " + category).toLowerCase();
+  if (/microblad|micropigment|pelo a pelo|cejas virgenes/.test(t)) {
+    return "/images/hero-microblading.webp";
+  }
+  if (/mantenimiento|retoque|evaluacion|perfilado/.test(t)) {
+    return "/images/microblading-detail.webp";
+  }
+  if (/labios|lip|liner|delineado/.test(t)) {
+    return "/images/lip-brow-result.webp";
+  }
+  if (/ceja|laminado|pestana|lifting|extension/.test(t)) {
+    return "/images/studio-experience.webp";
+  }
+  return "/images/hero-microblading.webp";
+}
+
+function getFallbackServices(): Service[] {
+  const overrides = readLocalServices();
+  return (pricesData?.services || []).map((s, idx) => {
+    const category = categorizeService(s.title);
+    const base: Service = {
+      id: s.id,
+      slug: s.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
+      title: s.title,
+      description: s.description || "",
+      duration_mins: Math.max(15, Number(s.durationMins) || 30),
+      price_cents: Math.round(Number(s.price) * 100),
+      category,
+      active: !s.title.toLowerCase().includes("gift"),
+      sort_order: idx + 1,
+      image_url: getDefaultServiceImage(s.title, category),
+    };
+    const ov = overrides[s.id];
+    return ov ? { ...base, ...ov } : base;
+  });
+}
 
 // Fallback initial appointments around 2026-11-18 for demonstration & UI testing
 const initialDemoAppointments: AppointmentWithJoins[] = [
@@ -158,53 +233,105 @@ function saveFallbackAppointments(list: AppointmentWithJoins[]) {
   }
 }
 
+let schemaEnsured = false;
+async function ensureServicesSchema() {
+  if (schemaEnsured || !hasDatabase()) return;
+  try {
+    await sql`ALTER TABLE services ADD COLUMN IF NOT EXISTS image_url text`;
+    schemaEnsured = true;
+  } catch {
+    /* ignore */
+  }
+}
+
 export async function listActiveServices(): Promise<Service[]> {
   if (!hasDatabase()) {
     return getFallbackServices().filter((s) => s.active);
   }
-  return (await sql`
-    SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
-    FROM services
-    WHERE active = true
-    ORDER BY category ASC, sort_order ASC, title ASC
-  `) as Service[];
+  await ensureServicesSchema();
+  try {
+    return (await sql`
+      SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order, image_url
+      FROM services
+      WHERE active = true
+      ORDER BY category ASC, sort_order ASC, title ASC
+    `) as Service[];
+  } catch {
+    return (await sql`
+      SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
+      FROM services
+      WHERE active = true
+      ORDER BY category ASC, sort_order ASC, title ASC
+    `) as Service[];
+  }
 }
 
 export async function listAllServices(): Promise<Service[]> {
   if (!hasDatabase()) {
     return getFallbackServices();
   }
-  return (await sql`
-    SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
-    FROM services
-    ORDER BY category ASC, sort_order ASC, title ASC
-  `) as Service[];
+  await ensureServicesSchema();
+  try {
+    return (await sql`
+      SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order, image_url
+      FROM services
+      ORDER BY category ASC, sort_order ASC, title ASC
+    `) as Service[];
+  } catch {
+    return (await sql`
+      SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
+      FROM services
+      ORDER BY category ASC, sort_order ASC, title ASC
+    `) as Service[];
+  }
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | null> {
   if (!hasDatabase()) {
     return getFallbackServices().find((s) => s.slug === slug) ?? null;
   }
-  const rows = (await sql`
-    SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
-    FROM services
-    WHERE slug = ${slug}
-    LIMIT 1
-  `) as Service[];
-  return rows[0] ?? null;
+  await ensureServicesSchema();
+  try {
+    const rows = (await sql`
+      SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order, image_url
+      FROM services
+      WHERE slug = ${slug}
+      LIMIT 1
+    `) as Service[];
+    return rows[0] ?? null;
+  } catch {
+    const rows = (await sql`
+      SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
+      FROM services
+      WHERE slug = ${slug}
+      LIMIT 1
+    `) as Service[];
+    return rows[0] ?? null;
+  }
 }
 
 export async function getServiceById(id: string): Promise<Service | null> {
   if (!hasDatabase()) {
     return getFallbackServices().find((s) => s.id === id) ?? null;
   }
-  const rows = (await sql`
-    SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
-    FROM services
-    WHERE id = ${id}
-    LIMIT 1
-  `) as Service[];
-  return rows[0] ?? null;
+  await ensureServicesSchema();
+  try {
+    const rows = (await sql`
+      SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order, image_url
+      FROM services
+      WHERE id = ${id}
+      LIMIT 1
+    `) as Service[];
+    return rows[0] ?? null;
+  } catch {
+    const rows = (await sql`
+      SELECT id, slug, title, description, duration_mins, price_cents, category, active, sort_order
+      FROM services
+      WHERE id = ${id}
+      LIMIT 1
+    `) as Service[];
+    return rows[0] ?? null;
+  }
 }
 
 export async function listActiveStaff(): Promise<Staff[]> {
@@ -560,8 +687,28 @@ export async function updateService(input: {
   category: string;
   active: boolean;
   description: string;
+  imageUrl?: string | null;
 }) {
+  const overrides = readLocalServices();
+  overrides[input.id] = {
+    ...overrides[input.id],
+    id: input.id,
+    title: input.title,
+    duration_mins: input.durationMins,
+    price_cents: input.priceCents,
+    category: input.category,
+    active: input.active,
+    description: input.description,
+    image_url: input.imageUrl !== undefined ? input.imageUrl : (overrides[input.id]?.image_url || null),
+  };
+  writeLocalServices(overrides);
+
   if (!hasDatabase()) return;
+
+  try {
+    await sql`ALTER TABLE services ADD COLUMN IF NOT EXISTS image_url text`;
+  } catch {}
+
   await sql`
     UPDATE services
     SET title = ${input.title},
@@ -570,6 +717,7 @@ export async function updateService(input: {
         category = ${input.category},
         active = ${input.active},
         description = ${input.description},
+        image_url = ${input.imageUrl || null},
         updated_at = now()
     WHERE id = ${input.id}
   `;

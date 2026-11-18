@@ -20,6 +20,17 @@ async function main() {
   }
 
   const sql = neon(url);
+  await sql`
+    CREATE TABLE IF NOT EXISTS admin_users (
+      id text PRIMARY KEY DEFAULT gen_random_uuid()::text,
+      email text UNIQUE NOT NULL,
+      password_hash text NOT NULL,
+      name text NOT NULL,
+      active boolean NOT NULL DEFAULT true,
+      created_at timestamptz NOT NULL DEFAULT now(),
+      updated_at timestamptz NOT NULL DEFAULT now()
+    );
+  `;
   const hash = await bcrypt.hash(password, 12);
   const rows = await sql`
     INSERT INTO admin_users (email, password_hash, name, active)

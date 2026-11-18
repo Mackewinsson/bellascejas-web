@@ -44,6 +44,66 @@ async function main() {
   if (!url) throw new Error("NEON_DATABASE_URL missing");
   const sql = neon(url);
 
+  console.log("Creando tablas en Neon si no existen...");
+  await sql`
+    CREATE TABLE IF NOT EXISTS business_hours (
+      weekday int PRIMARY KEY,
+      open_time time NOT NULL,
+      close_time time NOT NULL,
+      is_closed boolean NOT NULL DEFAULT false
+    );
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS staff (
+      id text PRIMARY KEY DEFAULT gen_random_uuid()::text,
+      name text NOT NULL,
+      email text,
+      active boolean NOT NULL DEFAULT true,
+      sort_order int NOT NULL DEFAULT 0,
+      created_at timestamptz NOT NULL DEFAULT now(),
+      updated_at timestamptz NOT NULL DEFAULT now()
+    );
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS services (
+      id text PRIMARY KEY DEFAULT gen_random_uuid()::text,
+      slug text UNIQUE NOT NULL,
+      title text NOT NULL,
+      description text DEFAULT '',
+      duration_mins int NOT NULL DEFAULT 30,
+      price_cents int NOT NULL DEFAULT 0,
+      category text NOT NULL DEFAULT 'Otros',
+      active boolean NOT NULL DEFAULT true,
+      sort_order int NOT NULL DEFAULT 0,
+      external_id text,
+      image_url text,
+      created_at timestamptz NOT NULL DEFAULT now(),
+      updated_at timestamptz NOT NULL DEFAULT now()
+    );
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS appointments (
+      id text PRIMARY KEY DEFAULT gen_random_uuid()::text,
+      service_id text REFERENCES services(id),
+      staff_id text REFERENCES staff(id),
+      starts_at timestamptz NOT NULL,
+      ends_at timestamptz NOT NULL,
+      client_name text NOT NULL,
+      client_email text NOT NULL,
+      client_phone text NOT NULL,
+      status text NOT NULL DEFAULT 'confirmed',
+      notes text DEFAULT '',
+      created_at timestamptz NOT NULL DEFAULT now(),
+      updated_at timestamptz NOT NULL DEFAULT now()
+    );
+  `;
+
+  // Ensure image_url column exists if table was created previously
+  await sql`ALTER TABLE services ADD COLUMN IF NOT EXISTS image_url text;`;
+
   // Hours: Sun=0 closed, Mon closed, Tue-Sat 10-18
   const hours = [
     [0, true, "10:00", "18:00"],

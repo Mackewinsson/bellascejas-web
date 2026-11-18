@@ -172,6 +172,9 @@ export async function actionDeleteAppointment(id: string) {
 
 export async function actionUpdateService(formData: FormData) {
   const id = String(formData.get("id") || "");
+  const imageUrlRaw = formData.get("imageUrl");
+  const imageUrl = imageUrlRaw !== null ? String(imageUrlRaw).trim() : undefined;
+
   await updateService({
     id,
     title: String(formData.get("title") || ""),
@@ -180,8 +183,14 @@ export async function actionUpdateService(formData: FormData) {
     category: String(formData.get("category") || "Otros"),
     active: formData.get("active") === "on",
     description: String(formData.get("description") || ""),
+    imageUrl: imageUrl || null,
   });
+
   safeRevalidatePath("/admin/servicios");
+  safeRevalidatePath("/");
+  safeRevalidatePath("/reservar");
+  safeRevalidatePath("/servicios/miami");
+  safeRevalidatePath("/servicios/miami/precios");
 }
 
 export async function actionUpsertStaff(formData: FormData) {
