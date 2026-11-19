@@ -7,7 +7,7 @@ import {
   renderPromotionEmailHtml,
   type PromotionTemplateId,
   type CampaignRecord,
-} from "@/lib/email/promotions";
+} from "@/lib/email/promotion-templates";
 import { actionSendPromotion } from "@/app/admin/promociones/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

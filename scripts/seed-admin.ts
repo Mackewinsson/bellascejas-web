@@ -6,12 +6,12 @@
 import { config } from "dotenv";
 config({ path: ".env.local" });
 
-import { neon } from "@neondatabase/serverless";
+import postgres from "postgres";
 import bcrypt from "bcryptjs";
 
 async function main() {
-  const url = process.env.NEON_DATABASE_URL;
-  if (!url) throw new Error("NEON_DATABASE_URL missing");
+  const url = process.env.DATABASE_URL || process.env.NEON_DATABASE_URL;
+  if (!url) throw new Error("DATABASE_URL or NEON_DATABASE_URL missing");
   const email = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
   const password = process.env.ADMIN_PASSWORD || "";
   const name = process.env.ADMIN_NAME || "Admin";
@@ -19,7 +19,7 @@ async function main() {
     throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD required");
   }
 
-  const sql = neon(url);
+  const sql = postgres(url, { ssl: url.includes("sslmode=require") ? { rejectUnauthorized: false } : false });
   await sql`
     CREATE TABLE IF NOT EXISTS admin_users (
       id text PRIMARY KEY DEFAULT gen_random_uuid()::text,
@@ -43,6 +43,7 @@ async function main() {
     RETURNING id, email
   `;
   console.log("admin user ready:", rows[0]);
+  await sql.end();
 }
 
 main().catch((err) => {
