@@ -13,13 +13,13 @@ const SKIP_EXACT = new Set([
   "Scroll al inicio",
   "WhatsApp",
   "Hola",
-  "¿En qué podemos ayudarte?",
+  "Â¿En quÃ© podemos ayudarte?",
   "Abrir chat",
   "Previous slide",
   "Next slide",
   "Buscar",
   "Menu",
-  "Alternar menú",
+  "Alternar menÃº",
 ]);
 
 const NAV_NOISE = [
@@ -34,21 +34,21 @@ const NAV_NOISE = [
   /^Preguntas Frecuentes$/i,
   /^Contacto$/i,
   /^Cejas$/i,
-  /^Depilación$/i,
+  /^DepilaciÃ³n$/i,
   /^Electrocauterizacion$/i,
   /^Faciales$/i,
   /^Microblading/i,
   /^Retoques/i,
-  /^Pestañas$/i,
+  /^PestaÃ±as$/i,
   /^Curso de/i,
   /^Curso De/i,
-  /^Diseño de cejas/i,
+  /^DiseÃ±o de cejas/i,
   /^Comentarios en Instagram$/i,
   /^Resultados$/i,
-  /^Reseñas de Google$/i,
-  /^Copyright ©/i,
+  /^ReseÃ±as de Google$/i,
+  /^Copyright Â©/i,
   /^Powered by/i,
-  /^https:\/\/diseñoswebjg/i,
+  /^https:\/\/diseÃ±oswebjg/i,
   /^https:\/\/xn--/i,
 ];
 
@@ -103,7 +103,7 @@ function blocksToMd(blocks) {
     } else if (b.type === "table") {
       lines.push("```", t, "```", "");
     } else {
-      // paragraph — skip if too short duplicate of heading style nav crumbs
+      // paragraph Â— skip if too short duplicate of heading style nav crumbs
       if (t.length < 2) continue;
       lines.push(t, "");
     }
@@ -146,13 +146,13 @@ const MANIFEST = [
   {
     json: "depilacion.json",
     out: "servicios-miami/depilacion.md",
-    title: "Depilación",
+    title: "DepilaciÃ³n",
     source_url: "https://bellascejas.com/depilacion/",
   },
   {
     json: "electrocauterizacion.json",
     out: "servicios-miami/electrocauterizacion.md",
-    title: "Electrocauterización",
+    title: "ElectrocauterizaciÃ³n",
     source_url: "https://bellascejas.com/electrocauterizacion/",
   },
   {
@@ -164,7 +164,7 @@ const MANIFEST = [
   {
     json: "microblading-micropigmentacion.json",
     out: "servicios-miami/microblading-micropigmentacion.md",
-    title: "Microblading / Micropigmentación",
+    title: "Microblading / MicropigmentaciÃ³n",
     source_url: "https://bellascejas.com/microblading-micropigmentacion/",
   },
   {
@@ -176,7 +176,7 @@ const MANIFEST = [
   {
     json: "pestanas.json",
     out: "servicios-miami/pestanas.md",
-    title: "Pestañas",
+    title: "PestaÃ±as",
     source_url: "https://bellascejas.com/pestanas/",
   },
   {
@@ -194,7 +194,7 @@ const MANIFEST = [
   {
     json: "diseno-cejas-brow-lamination.json",
     out: "cursos/diseno-cejas-brow-lamination.md",
-    title: "Diseño de cejas + Brow lamination y pestañas por racimo",
+    title: "DiseÃ±o de cejas + Brow lamination y pestaÃ±as por racimo",
     source_url:
       "https://bellascejas.com/diseno-de-cejas-brown-lamination-y-pestanas-por-racimo/",
   },
@@ -219,7 +219,7 @@ const MANIFEST = [
   {
     json: "resenas-google.json",
     out: "clientes/resenas-google.md",
-    title: "Reseñas de Google",
+    title: "ReseÃ±as de Google",
     source_url: "https://bellascejas.com/4980-2/",
   },
   {
