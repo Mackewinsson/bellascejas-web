@@ -87,10 +87,10 @@ async function ensureLeadsTable() {
         notes TEXT DEFAULT '',
         created_at TIMESTAMPTZ DEFAULT now(),
         updated_at TIMESTAMPTZ DEFAULT now()
-      );
-      CREATE INDEX IF NOT EXISTS idx_leads_email ON leads(lower(email));
-      CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(status);
+      )
     `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_leads_email ON leads(lower(email))`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(status)`;
     tableInitialized = true;
   } catch (err) {
     console.warn("Could not ensure leads table:", err);

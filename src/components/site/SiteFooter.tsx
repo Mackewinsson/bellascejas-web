@@ -6,8 +6,8 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div>
-          <div className="footer-brand">{SITE.name}</div>
-          <p className="footer-muted">{SITE.legalName}</p>
+          <div className="footer-brand notranslate" translate="no">{SITE.name}</div>
+          <p className="footer-muted notranslate" translate="no">{SITE.legalName}</p>
           <p className="footer-muted" style={{ marginTop: "0.75rem" }}>
             {SITE.tagline}
           </p>

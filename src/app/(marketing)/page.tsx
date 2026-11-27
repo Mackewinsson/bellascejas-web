@@ -81,9 +81,9 @@ export default async function HomePage() {
         <div className="hero__atmosphere">
           <div className="container hero__grid">
             <div className="hero__content">
-              <p className="hero__brand">Bellas Cejas</p>
-              <h1 className="hero__headline">
-                Bellascejas Academy LLC Eyebrow Bar &amp; Beauty
+              <p className="hero__brand notranslate" translate="no">Bellas Cejas</p>
+              <h1 className="hero__headline notranslate" translate="no">
+                Bellas Cejas Studio &amp; Academy
               </h1>
               <p className="hero__support">
                 Especialistas en realce facial y micropigmentación en Miami y

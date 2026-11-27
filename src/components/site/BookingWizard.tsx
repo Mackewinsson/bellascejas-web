@@ -700,7 +700,7 @@ export function BookingWizard({ services, staff, initialSlug }: Props) {
                   <div className="booking-option__details">
                     <span className="booking-option__title">{st.name}</span>
                     <p className="booking-option__desc">
-                      Especialista en Bellascejas Miami
+                      Especialista en Bellas Cejas Miami
                     </p>
                   </div>
                 </label>

@@ -31,7 +31,7 @@ function emailWrapper(content: string): string {
                 BELLAS CEJAS
               </h1>
               <p style="margin:4px 0 0;font-size:11px;color:#F6F2F3;letter-spacing:1.5px;text-transform:uppercase;opacity:0.9;">
-                Academy & Eyebrow Bar · Miami
+                Studio & Academy · Miami
               </p>
             </td>
           </tr>

@@ -16,7 +16,7 @@ export default async function ReservarExitoPage({
     <>
       <PageHero
         title="¡Listo!"
-        lead="Tu cita quedó registrada. Te enviamos un email de confirmación si Resend está configurado."
+        lead="Tu cita quedó registrada con éxito. Te hemos enviado un correo de confirmación con todos los detalles."
       />
       <section className="section">
         <div className="container stub">

@@ -15,7 +15,7 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="container site-header__inner">
-        <Link href="/" className="brand" onClick={() => setOpen(false)}>
+        <Link href="/" className="brand notranslate" translate="no" onClick={() => setOpen(false)}>
           Bellas <span>Cejas</span>
         </Link>
 

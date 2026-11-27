@@ -1,6 +1,6 @@
 export const SITE = {
   name: "Bellas Cejas",
-  legalName: "Bellascejas Academy LLC Eyebrow Bar & Beauty",
+  legalName: "Bellas Cejas Academy LLC",
   tagline:
     "Especialistas en realce facial y micropigmentación en Miami y Santiago.",
   bookingUrl: "/reservar",
