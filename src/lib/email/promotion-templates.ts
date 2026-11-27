@@ -50,7 +50,7 @@ export const PROMO_TEMPLATES: PromotionTemplate[] = [
     defaultBadge: "✦ BENEFICIO VIP CLIENTAS",
     defaultTitle: "¿Lista para tu retoque o nuevo tratamiento?",
     defaultBody:
-      "Ha pasado un tiempo desde tu última visita y queremos que tus cejas y rostro sigan luciendo impecables. Te obsequiamos un bono especial de $15 USD para tu próxima cita de retoque, mantenimiento o hidratación facial en nuestro salón de Doral.",
+      "Ha pasado un tiempo desde tu última visita y queremos que tus cejas y rostro sigan luciendo impecables. Te obsequiamos un bono especial de $15 USD para tu próxima cita de retoque, mantenimiento o hidratación facial en nuestro salón de Miami.",
     defaultDiscountCode: "RETOQUE15",
     defaultCtaText: "Agendar mi Cita con Bono",
     defaultCtaUrl: "/reservar",

@@ -19,7 +19,7 @@ Ver también `src/lib/site.ts` (fuente única en código para contacto, booking,
 - Booking público: `/reservar` (timezone `America/New_York` / Miami)
 - Admin citas: `/admin/citas`, servicios `/admin/servicios`, equipo `/admin/equipo`
 - WhatsApp: http://wa.link/661qhl
-- Miami: 11402 NW 41 St, Doral FL 33178 (Suites 218 / 107)
+- Miami: 1460 NW 107th Ave, Suite 28A, Miami, FL 33172
 - Santiago: Quinta Normal, San Pablo 4025 — reserva vía WhatsApp Chile (sin slots en v1)
 
 ## Booking (v1)

@@ -12,7 +12,7 @@ const miamiServices =
 export const metadata = {
   title: "Bellascejas Academy | Microblading & Realce Facial en Miami y Santiago",
   description:
-    "Especialistas en microblading, micropigmentación pelo a pelo y estética facial en Miami (Doral) y Santiago. Más de 10 años de experiencia y 3,000 procedimientos realizados por Máster Phibrows.",
+    "Especialistas en microblading, micropigmentación pelo a pelo y estética facial en Miami y Santiago. Más de 10 años de experiencia y 3,000 procedimientos realizados por Máster Phibrows.",
 };
 
 export default async function HomePage() {
@@ -160,7 +160,7 @@ export default async function HomePage() {
               <span className="trust-item__icon">✦</span>
               <div>
                 <strong>Miami &amp; Santiago</strong>
-                <p>Doral FL &amp; Quinta Normal</p>
+                <p>Miami FL &amp; Quinta Normal</p>
               </div>
             </div>
           </div>
@@ -282,14 +282,14 @@ export default async function HomePage() {
                 ética, elegancia y naturalidad.»
               </blockquote>
               <p className="section__lead">
-                Ubicados en <strong>Doral, Miami (Areas Salones)</strong>,
+                Ubicados en <strong>Miami ({SITE.miami.address}, {SITE.miami.suites})</strong>,
                 brindamos un ambiente tranquilo y cálido donde cada cita
                 comienza con una evaluación minuciosa para escuchar lo que deseas
                 y sugerir el mejor enfoque para tu rostro.
               </p>
               <div className="btn-row" style={{ marginTop: "1.25rem" }}>
                 <Link href="/contacto" className="btn btn--ghost">
-                  Conoce nuestra sede en Doral →
+                  Conoce nuestra sede en Miami →
                 </Link>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Service, Staff } from "@/lib/booking/types";
 import { formatUsd, BOOKING_TZ } from "@/lib/booking/types";
+import { SITE } from "@/lib/site";
 
 type Props = {
   services: Service[];
@@ -790,7 +791,7 @@ export function BookingWizard({ services, staff, initialSlug }: Props) {
         {expandedStep === 3 && (
           <div className="booking-accordion-step__body">
             <div className="booking-tz-badge">
-              <span>📍 Salón Miami: Doral, FL · Horarios en hora local (EST)</span>
+              <span>📍 Salón Miami: {SITE.miami.address} ({SITE.miami.suites}) · Horarios en hora local (EST)</span>
             </div>
 
             {/* Quick date shortcuts */}
@@ -1018,7 +1019,7 @@ export function BookingWizard({ services, staff, initialSlug }: Props) {
                 </div>
                 <div className="booking-summary-item">
                   <span className="booking-summary-lbl">Ubicación:</span>
-                  <span>11402 NW 41 St, Doral FL 33178 (Suites 218 / 107)</span>
+                  <span>{SITE.miami.address} ({SITE.miami.suites})</span>
                 </div>
               </div>
               <div className="booking-summary-note">

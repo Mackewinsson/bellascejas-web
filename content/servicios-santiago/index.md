@@ -171,7 +171,7 @@ No, el microblading si se hace el capa correcta no debe sangrar. Esto se debe a 
 
 ¿Tienes más preguntas ?
 
-Areas Salon Suites, 11402 NW 41st St #218, suite 107 Doral, FL 33178
+1460 NW 107th Ave, Suite 28A, Miami, FL 33172
 
 +1 7868205602
 

@@ -13,7 +13,7 @@ locale_hint: es
 
 #### Dirección
 
-11402 NW 41 St Doral FL 33178 Areas Salones Suite 218- Suite 107
+1460 NW 107th Ave, Suite 28A, Miami, FL 33172
 
 #### Teléfono
 

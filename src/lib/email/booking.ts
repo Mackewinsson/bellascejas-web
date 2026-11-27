@@ -106,7 +106,7 @@ export async function sendBookingEmails(input: {
       ¡Tu cita ha sido agendada con éxito!
     </h2>
     <p style="font-size:15px;color:#6F6064;margin-bottom:20px;">
-      Hola <strong>${input.clientName}</strong>, gracias por elegir Bellas Cejas. Te esperamos en nuestro salón de Doral:
+      Hola <strong>${input.clientName}</strong>, gracias por elegir Bellas Cejas. Te esperamos en nuestro salón de Miami (${SITE.miami.address}, ${SITE.miami.suites}):
     </p>
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#FAF7F8;border-radius:8px;padding:18px;margin-bottom:24px;">

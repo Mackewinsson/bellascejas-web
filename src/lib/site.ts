@@ -13,9 +13,9 @@ export const SITE = {
   facebookBrand: "https://www.facebook.com/bellascejascl",
   tiktok: "https://www.tiktok.com/@bellascejascl",
   miami: {
-    address: "11402 NW 41 St, Doral FL 33178",
-    suites: "Areas Salones Suite 218 – Suite 107",
-    mapsUrl: "https://maps.app.goo.gl/nVspGdSiTeXvtgpz9",
+    address: "1460 NW 107th Ave, Miami, FL 33172",
+    suites: "Suite 28A",
+    mapsUrl: "https://maps.google.com/?q=1460+NW+107th+Ave+Suite+28A+Miami+FL+33172",
     hours: [
       "Martes – Sábado: 10:00am a 06:00pm",
       "Domingo – Lunes: Cerrado",

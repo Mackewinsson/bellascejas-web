@@ -42,8 +42,7 @@ Artista en Micropigmentación de cejas, ojos y labios. Especialista en depilaci�
 
 ## Dirección (Miami)
 
-11402 NW 41 St Doral FL 33178  
-Areas Salones Suite 218 - Suite 107  
+1460 NW 107th Ave, Suite 28A, Miami, FL 33172  
 
 [Ver en Google Maps](https://maps.app.goo.gl/nVspGdSiTeXvtgpz9)
 

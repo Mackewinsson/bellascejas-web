@@ -22,7 +22,7 @@ export default async function ReservarExitoPage({
         <div className="container stub">
           {id ? <p>Referencia: <code>{id}</code></p> : null}
           <p>
-            Dirección: {SITE.miami.address}. Si necesitas cambiar la cita, escríbenos
+            Dirección: {SITE.miami.address} ({SITE.miami.suites}). Si necesitas cambiar la cita, escríbenos
             por WhatsApp con al menos 48 horas de anticipación.
           </p>
           <div className="btn-row">
